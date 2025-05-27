@@ -15,11 +15,11 @@
 ### ALTERNATIVE: Access Existing Data Files
 1. Navigate to [Demo_1-GenAI/Demo_Data](https://github.com/HairyQ/Redhat-Summit/tree/main/Demo_1-GenAI/Demo_Data) to access existing data downloads
    - Subset of dataset to be uploaded for live demo (4 records)
-     https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data.csv
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data.csv
    - Sample CSV output of subset
-     https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data_Sample-Output.csv
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data_Sample-Output.csv
    - Sample of Doc version of subset
-     https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Document_Example.docx
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Document_Example.docx
    - Additional data for training or exploratory purposes
-     https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Additional_Data.xlsx
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Additional_Data.xlsx
 
