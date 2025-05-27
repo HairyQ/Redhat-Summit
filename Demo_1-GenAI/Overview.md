@@ -8,8 +8,8 @@ This demo ingests unstructured, text-based event reports using Object Storage an
 </p>
 
 # Demo Components
-## 1. OpenShift Deployment
-## 2. Demo Data Aggregation
+## 1. Demo Data Collection
+## 2. OpenShift Deployment
 ## 3. NVIDIA NIM Deployment (Llama Model)
 ## 4. OCI Event + Function + Stream Creation
 ## 5. Orchestrator Deployment
