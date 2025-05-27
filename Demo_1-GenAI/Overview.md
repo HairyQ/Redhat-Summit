@@ -4,16 +4,16 @@ This workflow streamlines operations by transforming unstructured event reports 
 This demo ingests unstructured, text-based event reports using Object Storage and triggers OCI Events to initiate processing. OCI Functions handle data cleansing and formatting, then invoke a Generative AI model (LLM) to summarize key incident details for easier analysis. The structured summaries are published via OCI Streaming and consumed by an orchestrator, which ensures reliable delivery to the enterprise asset management system. This automated pipeline reduces manual effort, accelerates response times, and standardizes incident reporting across the organization.
 
 <p align="center">
-  <img src="Demo-Content/Images/Demo1_Architecture_Overview.png" alt="Demo 1 - Architecture Diagram" width="700"/>
+  <img src="Redhat-Summit/Demo-Content/Images/Demo1_Architecture_Overview.png" alt="Demo 1 - Architecture Diagram" width="700"/>
 </p>
 
-## Demo Steps
-# 1. OpenShift Deployment
-# 2. Demo Data Aggregation
-# 3. NVIDIA NIM Deployment (Llama Model)
-# 4. OCI Event + Function + Stream Creation
-# 5. Orchestrator Deployment
-# 6. IBM Maximo Data Configuration
+# Demo Steps
+## 1. OpenShift Deployment
+## 2. Demo Data Aggregation
+## 3. NVIDIA NIM Deployment (Llama Model)
+## 4. OCI Event + Function + Stream Creation
+## 5. Orchestrator Deployment
+## 6. IBM Maximo Data Configuration
 
-## Demo Process Flow
+# Demo Process Flow
 
