@@ -7,5 +7,6 @@ This demo showcases an end-to-end AI-enhanced incident and anomaly management wo
 
   - Lastly, an integrated Oracle Analytics Cloud dashboard provides unified visualization of both user-reported events and telemetry-triggered incidents, alongside financial and operational impact analyses
 
-![image](https://github.com/user-attachments/assets/4d7d590d-4657-486f-8fc6-bae3c866788f)
+https://github.com/user-attachments/assets/4d7d590d-4657-486f-8fc6-bae3c866788f
+
 
