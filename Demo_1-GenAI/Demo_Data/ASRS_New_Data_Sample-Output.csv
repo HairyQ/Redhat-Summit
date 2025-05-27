@@ -1,0 +1,5 @@
+ACN,Time_Date Time,Aircraft 1_MSN ID,Component_Aircraft Component,Person 1_Function,Place_State Reference,Aircraft 1_Flight Phase,Assessments_Primary Problem,Events_Anomaly,Events_Result,Failure Code_Failure Code,Title,Summary
+1958228,2025-04-16T12:01:00+00:00,MSN6424,OTH,FIRST OFFICER,FO,Cruise,AIRCRAFT,Aircraft Equipment Problem,Air Traffic Control Provided Assistance,,,
+2000882,2025-04-16T12:01:00+00:00,MSN4535,OTH,PILOT,CA,Initial Climb,AIRCRAFT,Aircraft Equipment Problem,Air Traffic Control Provided Assistance,,,
+2106640,2025-04-16T12:01:00+00:00,MSN5611,OTH,CAPTAIN,NY,Cruise,AIRCRAFT,Aircraft Equipment Problem,Air Traffic Control Provided Assistance,,,
+2128733,2025-04-16T12:01:00+00:00,MSN5613,OTH,FIRST OFFICER,CO,Initial Climb,AIRCRAFT,Aircraft Equipment Problem,Air Traffic Control Provided Assistance,,,
