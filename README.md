@@ -18,7 +18,14 @@ This repository consists of material for 2 separate demos, each focsuing on **AI
 This workflow streamlines operations by transforming unstructured event reports into concise, actionable summaries using AI, enabling faster incident analysis and response. It reduces manual effort and ensures consistent, enterprise-wide asset management through automated data processing and system integration
 
 This demo ingests unstructured, text-based event reports using Object Storage and triggers OCI Events to initiate processing. OCI Functions handle data cleansing and formatting, then invoke a Generative AI model (LLM) to summarize key incident details for easier analysis. The structured summaries are published via OCI Streaming and consumed by an orchestrator, which ensures reliable delivery to the enterprise asset management system. This automated pipeline reduces manual effort, accelerates response times, and standardizes incident reporting across the organization.
+<p align="center">
+  <img src="Demo-Content/Images/Demo #1_Architecture_Overview.png" alt="Demo #1 Architecture Diagram" width="600"/>
+</p>
+
 ## Demo #2 (Agentic Anomaly Detection) Abstract
 This workflow enables early detection of equipment anomalies through automated analysis of real-time telemetry data, reducing unplanned downtime and improving asset reliability. Detected issues are automatically logged as incidents, streamlining operational response and minimizing manual intervention. Integrated reporting combines system-generated alerts with user-submitted data to provide actionable insights for maintenance and engineering teams.
 
 This demo illustrates how automated signal anomaly detection improves operational efficiency by proactively identifying equipment issues using OCI’s MSET2 engine and streaming IoT telemetry. By seamlessly integrating anomaly alerts into IBM Maximo through OCI services, the workflow eliminates manual data entry, accelerates incident response, and reduces downtime. The added analytics layer in Oracle Analytics Cloud enables real-time insights and strategic decision-making across engineering and maintenance teams.
+<p align="center">
+  <img src="Demo-Content/Images/Demo #2_Architecture_Overview.png" alt="Demo #2 Architecture Diagram" width="600"/>
+</p>
