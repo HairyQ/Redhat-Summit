@@ -7,7 +7,7 @@ This demo ingests unstructured, text-based event reports using Object Storage an
   <img src="../Demo-Content/Images/Demo1_Architecture_Overview.png" alt="Demo 1 - Architecture Diagram" width="700"/>
 </p>
 
-# Demo Steps
+# Demo Components
 ## 1. OpenShift Deployment
 ## 2. Demo Data Aggregation
 ## 3. NVIDIA NIM Deployment (Llama Model)
@@ -15,5 +15,5 @@ This demo ingests unstructured, text-based event reports using Object Storage an
 ## 5. Orchestrator Deployment
 ## 6. IBM Maximo Data Configuration
 
-# Demo Process Flow
+# Demo Steps
 
