@@ -1,6 +1,6 @@
-# AI-Powered Intelligent Maintenance Solution on OCI
-(2025 Red Hat Summit Demo)
-
+# AI-Powered Intelligent Maintenance Solution on OCI 
+## (2025 Red Hat Summit)
+### Demo Overview
 This demo showcases an end-to-end AI-enhanced incident and anomaly management workflow integrating Oracle Cloud Infrastructure (OCI), IBM Maximo, and open-source technologies. These core components are deployed on RedHat OpenShift in OCI, taking advantage of the flexible and scalable OpenShift technology from the public cloud to edge computing.
 
   - In the first phase, human-entered incident reports are ingested into OCI Object Storage, where OCI Functions and Llama3 generate concise summaries for maintenance teams. These are then mapped and pushed into IBM Maximo’s Events Management via REST API.
