@@ -16,8 +16,20 @@ This data represents a series of descriptive reports accounting events that occu
 
 NOTE: Many of these variables (MSN ID, Aircraft Component, Person 1_Function, State Reference, Flight Phase, Primary Problem, Anomaly, Result) will need to be manually entered into IBM Maximo as Dynamic List Values. This process may take some time, so keep the data to as few records as needed. If more records as needed, try to consolidate these variables to only have a handful of unique values.
 
+### Access Existing Data: Access Existing Data Files
+Navigate to [Demo_1-GenAI/Demo_Data](https://github.com/HairyQ/Redhat-Summit/tree/main/Demo_1-GenAI/Demo_Data) to access existing data downloads
+   - Subset of dataset to be uploaded for live demo (4 records)
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data.csv
+   - Sample CSV output of subset
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data_Sample-Output.csv
+   - Sample of Doc version of subset
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Document_Example.docx
 
-### 1a. Download New Data
+
+If you would like to download your own new data, follow the steps below. Additional data transformation may be required.
+
+
+### Download New Data
 1. Navigate to NASA ASRS Database to download data.
     - LINK: https://akama.arc.nasa.gov/ASRSDBOnline/QueryWizard_Filter.aspx
 2. Select appropriate filters 
@@ -25,7 +37,7 @@ NOTE: Many of these variables (MSN ID, Aircraft Component, Person 1_Function, St
     - Make/Model: All Airbus models
     - Mission: Passenger
 3. Click Run Search > Export Excel File
-### 1b. Transform and Supplement Data
+### Transform and Supplement New Data 
 1. Transform date variable to desired format
 2. Consolidate Parent and Child Headers into single row
 3. Remove empty rows (particularly Row 3)
@@ -37,14 +49,7 @@ NOTE: Many of these variables (MSN ID, Aircraft Component, Person 1_Function, St
        - In Excel, create a new column at BA and use the below function to edit column AZ (Aircraft 1_Component)
               - =UPPER(LEFT(AZ4,3))
 6. Convert Person 1_Function column (CP) to uppercase using UPPER Excel function
-### ALTERNATIVE: Access Existing Data Files
-Navigate to [Demo_1-GenAI/Demo_Data](https://github.com/HairyQ/Redhat-Summit/tree/main/Demo_1-GenAI/Demo_Data) to access existing data downloads
-   - Subset of dataset to be uploaded for live demo (4 records)
-       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data.csv
-   - Sample CSV output of subset
-       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data_Sample-Output.csv
-   - Sample of Doc version of subset
-       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Document_Example.docx
+
    - Additional data for training or exploratory purposes (4,000+ records)
        - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Additional_Data.xlsx
 
