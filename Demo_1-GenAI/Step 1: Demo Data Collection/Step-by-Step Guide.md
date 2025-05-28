@@ -24,6 +24,9 @@ Navigate to [Demo_1-GenAI/Demo_Data](https://github.com/HairyQ/Redhat-Summit/tre
        - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_New_Data_Sample-Output.csv
    - Sample of Doc version of subset
        - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Document_Example.docx
+   - Additional data for training or exploratory purposes (4,000+ records)
+       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Additional_Data.xlsx
+
 
 
 If you would like to download your own new data, follow the steps below. Additional data transformation may be required.
@@ -49,7 +52,4 @@ If you would like to download your own new data, follow the steps below. Additio
        - In Excel, create a new column at BA and use the below function to edit column AZ (Aircraft 1_Component)
               - =UPPER(LEFT(AZ4,3))
 6. Convert Person 1_Function column (CP) to uppercase using UPPER Excel function
-
-   - Additional data for training or exploratory purposes (4,000+ records)
-       - https://github.com/HairyQ/Redhat-Summit/blob/main/Demo_1-GenAI/Demo_Data/ASRS_Additional_Data.xlsx
 
