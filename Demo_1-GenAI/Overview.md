@@ -10,7 +10,7 @@ This demo ingests unstructured, text-based event reports using Object Storage an
 # Demo Components
 ## 1. Demo Data Collection
 Step-by-Step Guide
-    - https://github.com/HairyQ/Redhat-Summit/blob/8b812a542a54e7e4275b3834515aadda5bd76f77/Demo_1-GenAI/Step%201%3A%20Demo%20Data%20Collection.md
+    - https://github.com/HairyQ/Redhat-Summit/blob/0010aa2ea1e573e2c43d2607b728018f274009f2/Demo_1-GenAI/Step%201%3A%20Demo%20Data%20Collection/Step-by-Step%20Guide.md
 
 Downloadable Content
     - https://github.com/HairyQ/Redhat-Summit/tree/8b812a542a54e7e4275b3834515aadda5bd76f77/Demo_1-GenAI/Demo_Data
