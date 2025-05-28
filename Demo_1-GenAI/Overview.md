@@ -11,6 +11,7 @@ This demo ingests unstructured, text-based event reports using Object Storage an
 ## 1. Demo Data Collection
 Step-by-Step Guide
     - https://github.com/HairyQ/Redhat-Summit/blob/8b812a542a54e7e4275b3834515aadda5bd76f77/Demo_1-GenAI/Step%201%3A%20Demo%20Data%20Collection.md
+
 Downloadable Content
     - https://github.com/HairyQ/Redhat-Summit/tree/8b812a542a54e7e4275b3834515aadda5bd76f77/Demo_1-GenAI/Demo_Data
 ## 2. OpenShift Deployment
