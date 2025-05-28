@@ -9,6 +9,7 @@ This step will demonstrate how to create an OpenShift cluster and add GPU nodes 
 
 ### 2.1 Follow the instructions below to provision an OpenShift Cluster
 - https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/installing_on_oci/installing-oci-assisted-installer
+- https://docs.oracle.com/en-us/iaas/Content/openshift-on-oci/overview.htm
 
 #### 2.1.1 The highlevel deployment Workflow using Assisted Installer is:
 
