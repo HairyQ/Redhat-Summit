@@ -10,8 +10,6 @@ import json
 import io
 from oci.auth import signers
 
-BUCKET_NAME = "maximo-data"
-
 COMPARTMENT_ID="ocid1.compartment.oc1..aaaaaaaa5noas7excyco6l5cw4dosgyestcfe5xnzugktvwb6kn4ntlprg7q"
 OCI_STREAMING_ENDPOINT = "https://cell-1.streaming.us-ashburn-1.oci.oraclecloud.com"
 OCI_STREAM_OCID="ocid1.stream.oc1.iad.amaaaaaahtyn6pya75xlrsgjmygj743gysvwraxa6g7kw2xv7aaobngojbbq"
