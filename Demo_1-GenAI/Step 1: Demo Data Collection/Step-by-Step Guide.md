@@ -40,7 +40,7 @@ This data represents a series of descriptive reports accounting events that occu
 
 If you would like to download your own new data, follow the steps below. Additional data transformation may be required.
 
-NOTE: Many of these variables (MSN ID, Aircraft Component, Person 1_Function, State Reference, Flight Phase, Primary Problem, Anomaly, Result) will need to be manually entered into IBM Maximo as Dynamic List Values. This process may take some time, so keep the data to as few records as needed. If more records as needed, try to consolidate these variables to only have a handful of unique values.
+NOTE: Many of these variables (MSN ID, Person 1_Function, State Reference, Flight Phase, Primary Problem, Anomaly, Result) will need to be manually entered into IBM Maximo as Dynamic List Values. This process may take some time, so keep the data to as few records as needed. If more records as needed, try to consolidate these variables to only have a handful of unique values.
 
 
 ### Download New Data
@@ -62,5 +62,9 @@ NOTE: Many of these variables (MSN ID, Aircraft Component, Person 1_Function, St
 5. Convert Aircraft Component to appropriate format
        - In Excel, create a new column at BA and use the below function to edit column AZ (Aircraft 1_Component)
               - =UPPER(LEFT(AZ4,3))
-6. Convert Person 1_Function column (CP) to uppercase using UPPER Excel function
+6. Convert 'Person 1_Function' column (CP) to uppercase using UPPER() Excel function
+7. Convert 'Assessments_Primary Problem' column (DP) to uppercase using UPPER() Excel function
+8. Trim 'Events_Anomaly' column (DI) using LEFT() Excel function. Maximum length is 250 characters, but these will need to be manually inputted into Maximo so mnimize the number of unique values. 
+9. Trim 'Events_Result' column (DN) using LEFT() Excel function. Maximum length is 64 characters, but these will need to be manually inputted into Maximo so mnimize the number of unique values.
+10. 
 
