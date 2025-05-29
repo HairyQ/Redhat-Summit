@@ -66,5 +66,5 @@ NOTE: Many of these variables (MSN ID, Person 1_Function, State Reference, Fligh
 7. Convert 'Assessments_Primary Problem' column (DP) to uppercase using UPPER() Excel function
 8. Trim 'Events_Anomaly' column (DI) using LEFT() Excel function. Maximum length is 250 characters, but these will need to be manually inputted into Maximo so mnimize the number of unique values. 
 9. Trim 'Events_Result' column (DN) using LEFT() Excel function. Maximum length is 64 characters, but these will need to be manually inputted into Maximo so mnimize the number of unique values.
-10. 
+   
 
