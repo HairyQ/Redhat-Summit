@@ -1,0 +1,13 @@
+{
+  "name": "Jet Engine Asset",
+  "description": "Jet Engine Asset Profile",
+  "image": null,
+  "defaultRuleChainId": {
+    "entityType": "RULE_CHAIN",
+    "id": "2410d1c0-14ba-11f0-ab46-ed87d7e322d7"
+  },
+  "defaultDashboardId": null,
+  "defaultQueueName": null,
+  "defaultEdgeRuleChainId": null,
+  "default": false
+}

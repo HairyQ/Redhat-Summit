@@ -1,0 +1,785 @@
+{
+  "ruleChain": {
+    "additionalInfo": {
+      "description": ""
+    },
+    "name": "Root Rule Chain",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 2,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 50,
+          "layoutY": 440
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Timeseries",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "defaultTTL": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 49,
+          "layoutY": 342
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
+        "name": "Message Type Switch",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "version": 0
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "Process incoming messages from devices with the alarm rules defined in the device profile. Dispatch all incoming messages with \"Success\" relation type.",
+          "layoutX": 48,
+          "layoutY": 246
+        },
+        "type": "org.thingsboard.rule.engine.profile.TbDeviceProfileNode",
+        "name": "Device Profile Node",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "persistAlarmRulesState": false,
+          "fetchAlarmRulesStateOnStart": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1287,
+          "layoutY": 247
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Push to OCI Stream",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "topicPattern": "SAM_2",
+          "keyPattern": "",
+          "bootstrapServers": "cell-1.streaming.us-ashburn-1.oci.oraclecloud.com:9092",
+          "retries": 0,
+          "batchSize": 16384,
+          "linger": 0,
+          "bufferMemory": 33554432,
+          "acks": "-1",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "otherProperties": {
+            "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"harqo1yml1/harrison.quick@oracle.com/ocid1.streampool.oc1.iad.amaaaaaajcm4mbqapzniafcatikscb6thcoxtaqijy5ju77k77g6sj2z3o4a\" password=\"({ZKDFXyWlCmOlsP5Gh)\";",
+            "ssl.endpoint.identification.algorithm": "https",
+            "sasl.mechanism": "PLAIN",
+            "security.protocol": "SASL_SSL",
+            "enable.idempotence": "false"
+          },
+          "addMetadataKeyValuesAsKafkaHeaders": false,
+          "kafkaHeadersCharset": "UTF-8"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 50,
+          "layoutY": 540
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
+        "name": "Change Originator to Asset",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "originatorSource": "RELATED",
+          "entityType": null,
+          "entityNamePattern": null,
+          "relationsQuery": {
+            "fetchLastLevelOnly": false,
+            "direction": "FROM",
+            "maxLevel": 1,
+            "filters": []
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 49,
+          "layoutY": 734
+        },
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Asset Telemetry",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "defaultTTL": 0,
+          "skipLatestPersistence": false,
+          "useServerTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 47,
+          "layoutY": 636
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Include Device ID in Attribute Name",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var payload = {}\nfor (var key in msg) {\n    payload[metadata.deviceName + \"_\" + key] = msg[key];\n}\n\nreturn {msg: payload, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 461,
+          "layoutY": 245
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check for last device to send data",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "return metadata.deviceName == \"J1 Fuel Flow Meter\";",
+          "tbelScript": "return msg.temperature > 20;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1023,
+          "layoutY": 246
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Format into csv",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var payload = {}\n\nvar resulting_str = msg[\"J1 Low Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J1 High Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J1 High Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J1 Low Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J1 Bypass Duct Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J1 Fan Inlet Pitot Tube_pressure\"] + \",\"\n+ msg[\"J1 Fan Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J1 Low Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J1 High Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J1 Burner Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J1 Low Pressure Turbine Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J1 Fan Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J1 Core Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J1 Fuel Flow Meter_pps\"];\n\npayload[\"value\"] = resulting_str;\n\nreturn {msg: payload, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 721,
+          "layoutY": 245
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Enrich with other device info for aggregation",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "DATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "J1 Bypass Duct Pressure Transducer_pressure",
+            "J1 Core Rotation Tachometer_rpm",
+            "J1 Fan Inlet Pitot Tube_pressure",
+            "J1 Fan Outlet Pressure Transducer_pressure",
+            "J1 Fan Rotation Tachometer_rpm",
+            "J1 High Pressure Compressor Outlet Thermocouple_temperature",
+            "J1 High Pressure Turbine Outlet Thermocouple_temperature",
+            "J1 High Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J1 Low Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J1 Low Pressure Compressor Outlet Thermocouple_temperature",
+            "J1 Low Pressure Turbine Outlet Pressure Transducer_pressure",
+            "J1 Low Pressure Turbine Outlet Thermocouple_temperature",
+            "J1 Burner Outlet Pressure Transducer_pressure"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1288,
+          "layoutY": 337
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Push to OCI Stream",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "topicPattern": "SAM_Stream",
+          "keyPattern": "",
+          "bootstrapServers": "cell-1.streaming.us-ashburn-1.oci.oraclecloud.com:9092",
+          "retries": 0,
+          "batchSize": 16384,
+          "linger": 0,
+          "bufferMemory": 33554432,
+          "acks": "-1",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "otherProperties": {
+            "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"harqo1yml1/harrison.quick@oracle.com/ocid1.streampool.oc1.iad.amaaaaaajcm4mbqapzniafcatikscb6thcoxtaqijy5ju77k77g6sj2z3o4a\" password=\"({ZKDFXyWlCmOlsP5Gh)\";",
+            "ssl.endpoint.identification.algorithm": "https",
+            "sasl.mechanism": "PLAIN",
+            "security.protocol": "SASL_SSL",
+            "enable.idempotence": "false"
+          },
+          "addMetadataKeyValuesAsKafkaHeaders": false,
+          "kafkaHeadersCharset": "UTF-8"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 462,
+          "layoutY": 336
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check for last device to send data",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "return metadata.deviceName == \"J2 Fuel Flow Meter\";",
+          "tbelScript": "return msg.temperature > 20;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1024,
+          "layoutY": 336
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Format into csv",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var payload = {}\n\nvar resulting_str = msg[\"J2 Low Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J2 High Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J2 High Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J2 Low Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J2 Bypass Duct Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J2 Fan Inlet Pitot Tube_pressure\"] + \",\"\n+ msg[\"J2 Fan Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J2 Low Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J2 High Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J2 Burner Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J2 Low Pressure Turbine Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J2 Fan Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J2 Core Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J2 Fuel Flow Meter_pps\"];\n\npayload[\"value\"] = resulting_str;\n\nreturn {msg: payload, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 722,
+          "layoutY": 335
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Enrich with other device info for aggregation",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "DATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "J2 Bypass Duct Pressure Transducer_pressure",
+            "J2 Core Rotation Tachometer_rpm",
+            "J2 Fan Inlet Pitot Tube_pressure",
+            "J2 Fan Outlet Pressure Transducer_pressure",
+            "J2 Fan Rotation Tachometer_rpm",
+            "J2 High Pressure Compressor Outlet Thermocouple_temperature",
+            "J2 High Pressure Turbine Outlet Thermocouple_temperature",
+            "J2 High Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J2 Low Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J2 Low Pressure Compressor Outlet Thermocouple_temperature",
+            "J2 Low Pressure Turbine Outlet Pressure Transducer_pressure",
+            "J2 Low Pressure Turbine Outlet Thermocouple_temperature",
+            "J2 Burner Outlet Pressure Transducer_pressure"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1289,
+          "layoutY": 430
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Push to OCI Stream",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "topicPattern": "SAM_3",
+          "keyPattern": "",
+          "bootstrapServers": "cell-1.streaming.us-ashburn-1.oci.oraclecloud.com:9092",
+          "retries": 0,
+          "batchSize": 16384,
+          "linger": 0,
+          "bufferMemory": 33554432,
+          "acks": "-1",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "otherProperties": {
+            "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"harqo1yml1/harrison.quick@oracle.com/ocid1.streampool.oc1.iad.amaaaaaajcm4mbqapzniafcatikscb6thcoxtaqijy5ju77k77g6sj2z3o4a\" password=\"({ZKDFXyWlCmOlsP5Gh)\";",
+            "ssl.endpoint.identification.algorithm": "https",
+            "sasl.mechanism": "PLAIN",
+            "security.protocol": "SASL_SSL",
+            "enable.idempotence": "false"
+          },
+          "addMetadataKeyValuesAsKafkaHeaders": false,
+          "kafkaHeadersCharset": "UTF-8"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 463,
+          "layoutY": 429
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check for last device to send data",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "return metadata.deviceName == \"J3 Fuel Flow Meter\";",
+          "tbelScript": "return msg.temperature > 20;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1025,
+          "layoutY": 429
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Format into csv",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var payload = {}\n\nvar resulting_str = msg[\"J3 Low Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J3 High Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J3 High Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J3 Low Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J3 Bypass Duct Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J3 Fan Inlet Pitot Tube_pressure\"] + \",\"\n+ msg[\"J3 Fan Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J3 Low Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J3 High Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J3 Burner Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J3 Low Pressure Turbine Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J3 Fan Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J3 Core Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J3 Fuel Flow Meter_pps\"];\n\npayload[\"value\"] = resulting_str;\n\nreturn {msg: payload, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 723,
+          "layoutY": 428
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Enrich with other device info for aggregation",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "DATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "J3 Bypass Duct Pressure Transducer_pressure",
+            "J3 Core Rotation Tachometer_rpm",
+            "J3 Fan Inlet Pitot Tube_pressure",
+            "J3 Fan Outlet Pressure Transducer_pressure",
+            "J3 Fan Rotation Tachometer_rpm",
+            "J3 High Pressure Compressor Outlet Thermocouple_temperature",
+            "J3 High Pressure Turbine Outlet Thermocouple_temperature",
+            "J3 High Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J3 Low Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J3 Low Pressure Compressor Outlet Thermocouple_temperature",
+            "J3 Low Pressure Turbine Outlet Pressure Transducer_pressure",
+            "J3 Low Pressure Turbine Outlet Thermocouple_temperature",
+            "J3 Burner Outlet Pressure Transducer_pressure"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1289,
+          "layoutY": 526
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Push to OCI Stream",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "topicPattern": "SAM_4",
+          "keyPattern": "",
+          "bootstrapServers": "cell-1.streaming.us-ashburn-1.oci.oraclecloud.com:9092",
+          "retries": 0,
+          "batchSize": 16384,
+          "linger": 0,
+          "bufferMemory": 33554432,
+          "acks": "-1",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "otherProperties": {
+            "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"harqo1yml1/harrison.quick@oracle.com/ocid1.streampool.oc1.iad.amaaaaaajcm4mbqapzniafcatikscb6thcoxtaqijy5ju77k77g6sj2z3o4a\" password=\"({ZKDFXyWlCmOlsP5Gh)\";",
+            "ssl.endpoint.identification.algorithm": "https",
+            "sasl.mechanism": "PLAIN",
+            "security.protocol": "SASL_SSL",
+            "enable.idempotence": "false"
+          },
+          "addMetadataKeyValuesAsKafkaHeaders": false,
+          "kafkaHeadersCharset": "UTF-8"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 463,
+          "layoutY": 525
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check for last device to send data",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "return metadata.deviceName == \"J4 Fuel Flow Meter\";",
+          "tbelScript": "return msg.temperature > 20;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1025,
+          "layoutY": 525
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Format into csv",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var payload = {}\n\nvar resulting_str = msg[\"J4 Low Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J4 High Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J4 High Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J4 Low Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J4 Bypass Duct Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J4 Fan Inlet Pitot Tube_pressure\"] + \",\"\n+ msg[\"J4 Fan Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J4 Low Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J4 High Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J4 Burner Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J4 Low Pressure Turbine Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J4 Fan Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J4 Core Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J4 Fuel Flow Meter_pps\"];\n\npayload[\"value\"] = resulting_str;\n\nreturn {msg: payload, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 723,
+          "layoutY": 524
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Enrich with other device info for aggregation",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "DATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "J4 Bypass Duct Pressure Transducer_pressure",
+            "J4 Core Rotation Tachometer_rpm",
+            "J4 Fan Inlet Pitot Tube_pressure",
+            "J4 Fan Outlet Pressure Transducer_pressure",
+            "J4 Fan Rotation Tachometer_rpm",
+            "J4 High Pressure Compressor Outlet Thermocouple_temperature",
+            "J4 High Pressure Turbine Outlet Thermocouple_temperature",
+            "J4 High Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J4 Low Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J4 Low Pressure Compressor Outlet Thermocouple_temperature",
+            "J4 Low Pressure Turbine Outlet Pressure Transducer_pressure",
+            "J4 Low Pressure Turbine Outlet Thermocouple_temperature",
+            "J4 Burner Outlet Pressure Transducer_pressure"
+          ],
+          "getLatestValueWithTs": false
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1289,
+          "layoutY": 623
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Push to OCI Stream",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "topicPattern": "SAM_5",
+          "keyPattern": "",
+          "bootstrapServers": "cell-1.streaming.us-ashburn-1.oci.oraclecloud.com:9092",
+          "retries": 0,
+          "batchSize": 16384,
+          "linger": 0,
+          "bufferMemory": 33554432,
+          "acks": "-1",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "otherProperties": {
+            "sasl.jaas.config": "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"harqo1yml1/harrison.quick@oracle.com/ocid1.streampool.oc1.iad.amaaaaaajcm4mbqapzniafcatikscb6thcoxtaqijy5ju77k77g6sj2z3o4a\" password=\"({ZKDFXyWlCmOlsP5Gh)\";",
+            "ssl.endpoint.identification.algorithm": "https",
+            "sasl.mechanism": "PLAIN",
+            "security.protocol": "SASL_SSL",
+            "enable.idempotence": "false"
+          },
+          "addMetadataKeyValuesAsKafkaHeaders": false,
+          "kafkaHeadersCharset": "UTF-8"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 463,
+          "layoutY": 622
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "Check for last device to send data",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "return metadata.deviceName == \"J5 Fuel Flow Meter\";",
+          "tbelScript": "return msg.temperature > 20;"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1025,
+          "layoutY": 622
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Format into csv",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "JS",
+          "jsScript": "var payload = {}\n\nvar resulting_str = msg[\"J5 Low Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J5 High Pressure Compressor Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J5 High Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J5 Low Pressure Turbine Outlet Thermocouple_temperature\"] + \",\"\n+ msg[\"J5 Bypass Duct Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J5 Fan Inlet Pitot Tube_pressure\"] + \",\"\n+ msg[\"J5 Fan Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J5 Low Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J5 High Pressure Compressor Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J5 Burner Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J5 Low Pressure Turbine Outlet Pressure Transducer_pressure\"] + \",\"\n+ msg[\"J5 Fan Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J5 Core Rotation Tachometer_rpm\"] + \",\"\n+ msg[\"J5 Fuel Flow Meter_pps\"];\n\npayload[\"value\"] = resulting_str;\n\nreturn {msg: payload, metadata: metadata, msgType: msgType};",
+          "tbelScript": "return {msg: msg, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 723,
+          "layoutY": 621
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Enrich with other device info for aggregation",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": true,
+          "fetchTo": "DATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "J5 Bypass Duct Pressure Transducer_pressure",
+            "J5 Core Rotation Tachometer_rpm",
+            "J5 Fan Inlet Pitot Tube_pressure",
+            "J5 Fan Outlet Pressure Transducer_pressure",
+            "J5 Fan Rotation Tachometer_rpm",
+            "J5 High Pressure Compressor Outlet Thermocouple_temperature",
+            "J5 High Pressure Turbine Outlet Thermocouple_temperature",
+            "J5 High Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J5 Low Pressure Compressor Outlet Pressure Transducer_pressure",
+            "J5 Low Pressure Compressor Outlet Thermocouple_temperature",
+            "J5 Low Pressure Turbine Outlet Pressure Transducer_pressure",
+            "J5 Low Pressure Turbine Outlet Thermocouple_temperature",
+            "J5 Burner Outlet Pressure Transducer_pressure"
+          ],
+          "getLatestValueWithTs": false
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 0,
+        "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 1,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 19,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 23,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 5,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 9,
+        "type": "True"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 13,
+        "type": "True"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 10,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 12,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 15,
+        "toIndex": 17,
+        "type": "True"
+      },
+      {
+        "fromIndex": 16,
+        "toIndex": 14,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 17,
+        "toIndex": 16,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 19,
+        "toIndex": 21,
+        "type": "True"
+      },
+      {
+        "fromIndex": 20,
+        "toIndex": 18,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 21,
+        "toIndex": 20,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 23,
+        "toIndex": 25,
+        "type": "True"
+      },
+      {
+        "fromIndex": 24,
+        "toIndex": 22,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 25,
+        "toIndex": 24,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}
