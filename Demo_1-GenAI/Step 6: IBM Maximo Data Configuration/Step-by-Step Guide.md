@@ -19,9 +19,7 @@ Step-by-Step Walkthrough:
 1. Log into IBM Maximo and find the Search tab in the top left 
 2. Search for 'People' and click on 'People'
 3. Click 'New Person' on the left menu labeled 'Common Actions'
-4. Enter 'FIRST OFFICER' in the 'Person' field in the form
-     
-     - Ensure this is in ALL CAPS
+4. Enter 'FIRST OFFICER' in the 'Person' field in the form. Ensure this is in all caps
 5. Click the Save button in the top right
 6. Repeat the process for the following People
 
