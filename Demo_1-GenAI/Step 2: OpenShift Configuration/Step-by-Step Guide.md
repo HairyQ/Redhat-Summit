@@ -39,7 +39,9 @@ The procedure for using the Assisted Installer in a connected environment to ins
 
     iii. Upload the stack file template, and use it to create and apply the stack.
 
-    iv. Copy the custom manifest YAML file from the stack.
+    iv. Copy the custom manifest YAML file from the stack.\
+
+    NOTE: If deploying NVIDIA NIMs for Gen AI workloads, you may want to consider a GPU shape to support the compute.
 
 5. In the Assisted Installer console, complete the cluster installation:
 
